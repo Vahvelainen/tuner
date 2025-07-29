@@ -4,17 +4,15 @@ import {
   IconButton, 
   ToggleButton, 
   ToggleButtonGroup, 
-  Slider, 
   Typography,
   Paper
 } from '@mui/material';
-import { PlayArrow, Stop, VolumeUp } from '@mui/icons-material';
+import { PlayArrow, Stop } from '@mui/icons-material';
 import { ToneGenerator as ToneGeneratorClass, frequencyFromNote } from '../../utils/audioProcessor';
 import { 
   useToneGeneratorState, 
   setToneNote, 
   setToneOctave, 
-  setToneVolume, 
   setTonePlaying 
 } from '../../store/tunerStore';
 
@@ -161,14 +159,14 @@ function NoteDial({ selectedNote, selectedOctave, onNoteChange }: NoteDialProps)
 }
 
 export function ToneGenerator() {
-  const { selectedNote, selectedOctave, volume, isPlaying } = useToneGeneratorState();
+  const { selectedNote, selectedOctave, isPlaying } = useToneGeneratorState();
   const toneGeneratorRef = useRef<ToneGeneratorClass | null>(null);
 
   useEffect(() => {
     const initToneGenerator = async () => {
       toneGeneratorRef.current = new ToneGeneratorClass();
       await toneGeneratorRef.current.initialize();
-      toneGeneratorRef.current.setVolume(volume);
+      toneGeneratorRef.current.setVolume(1.0); // Fixed 100% volume
     };
 
     initToneGenerator();
@@ -180,11 +178,12 @@ export function ToneGenerator() {
     };
   }, []);
 
+  // Stop audio when isPlaying becomes false (e.g., when tab changes)
   useEffect(() => {
-    if (toneGeneratorRef.current) {
-      toneGeneratorRef.current.setVolume(volume);
+    if (!isPlaying && toneGeneratorRef.current) {
+      toneGeneratorRef.current.stop();
     }
-  }, [volume]);
+  }, [isPlaying]);
 
   const handleNoteChange = (note: string) => {
     setToneNote(note);
@@ -202,11 +201,6 @@ export function ToneGenerator() {
         toneGeneratorRef.current.play(frequency);
       }
     }
-  };
-
-  const handleVolumeChange = (event: Event, newValue: number | number[]) => {
-    const value = Array.isArray(newValue) ? newValue[0] : newValue;
-    setToneVolume(value / 100);
   };
 
   const handlePlayStop = () => {
@@ -232,10 +226,6 @@ export function ToneGenerator() {
       maxWidth: 500,
       mx: 'auto'
     }}>
-      <Typography variant="h4" sx={{ mb: 0, fontWeight: 300 }}>
-        Tone Generator
-      </Typography>
-
       {/* Note Dial with integrated display */}
       <NoteDial 
         selectedNote={selectedNote} 
@@ -286,29 +276,6 @@ export function ToneGenerator() {
       >
         {isPlaying ? <Stop sx={{ fontSize: 50 }} /> : <PlayArrow sx={{ fontSize: 50 }} />}
       </IconButton>
-
-      {/* Volume Slider */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%', maxWidth: 350 }}>
-        <VolumeUp sx={{ fontSize: 28 }} />
-        <Slider
-          value={volume * 100}
-          onChange={handleVolumeChange}
-          aria-labelledby="volume-slider"
-          min={0}
-          max={100}
-          sx={{ 
-            flexGrow: 1,
-            height: 8,
-            '& .MuiSlider-thumb': {
-              width: 20,
-              height: 20,
-            }
-          }}
-        />
-        <Typography variant="h6" sx={{ minWidth: 45, fontWeight: 'bold' }}>
-          {Math.round(volume * 100)}%
-        </Typography>
-      </Box>
     </Box>
   );
 } 

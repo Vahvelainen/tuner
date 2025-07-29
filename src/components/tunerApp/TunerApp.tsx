@@ -4,7 +4,7 @@ import { TunerDisplay } from '../tunerDisplay/TunerDisplay';
 import { TunerControls } from '../tunerControls/TunerControls';
 import { ToneGenerator } from '../toneGenerator/ToneGenerator';
 import { AudioProcessor, noteFromFrequency } from '../../utils/audioProcessor';
-import { useTunerState, updateFrequency, startListening, stopListening } from '../../store/tunerStore';
+import { useTunerState, updateFrequency, startListening, stopListening, stopToneGeneration } from '../../store/tunerStore';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,10 +43,11 @@ export function TunerApp() {
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
-    // Stop tuning when switching tabs
+    // Stop both tuning and tone generation when switching tabs
     if (isListening) {
       stopListening();
     }
+    stopToneGeneration();
   };
 
   useEffect(() => {

@@ -61,22 +61,9 @@ export function TunerDisplay() {
       width: '100%', 
       maxWidth: 500, 
       textAlign: 'center',
-      mx: 'auto'
+      mx: 'auto',
+      pt: 3
     }}>
-      {/* Title */}
-      <Typography 
-        variant="h3" 
-        component="h1" 
-        sx={{ 
-          fontWeight: 300,
-          color: 'text.primary',
-          letterSpacing: 1,
-          mb: 4
-        }}
-      >
-        Tuner
-      </Typography>
-
       {/* Dial Container - small window reveals big dial */}
       <Box sx={{ 
         position: 'relative', 

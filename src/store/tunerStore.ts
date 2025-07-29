@@ -108,6 +108,10 @@ export function setTonePlaying(isPlaying: boolean) {
   useStore.setState({ isPlaying });
 }
 
+export function stopToneGeneration() {
+  useStore.setState({ isPlaying: false });
+}
+
 // Combined state selectors
 export function useTunerState() {
   return useStore((state) => ({
