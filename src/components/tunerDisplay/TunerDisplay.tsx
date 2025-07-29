@@ -3,7 +3,7 @@ import { useTunerState } from '../../store/tunerStore';
 import { useState, useEffect } from 'react';
 
 export function TunerDisplay() {
-  const { detectedNote, centsOff, currentFrequency, isListening, targetNote } = useTunerState();
+  const { detectedNote, centsOff, currentFrequency, isListening } = useTunerState();
   const [lastDetectedNote, setLastDetectedNote] = useState<string>('C');
 
   // Update last detected note when we detect a new one
@@ -144,8 +144,8 @@ export function TunerDisplay() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontWeight: note === targetNote ? 'bold' : 'normal',
-                  color: note === targetNote ? 'primary.main' : 'text.primary',
+                  fontWeight: 'normal',
+                  color: 'text.primary',
                   fontSize: { xs: '1.2rem', sm: '1.5rem' },
                   transform: `rotate(${textRotation}deg)`,
                   transformOrigin: '50% 50%'

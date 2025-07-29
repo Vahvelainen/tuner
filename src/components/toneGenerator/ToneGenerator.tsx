@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { 
   Box, 
   IconButton, 
   ToggleButton, 
   ToggleButtonGroup, 
-  Typography,
-  Paper
+  Typography
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 import { ToneGenerator as ToneGeneratorClass, frequencyFromNote } from '../../utils/audioProcessor';
@@ -193,7 +192,7 @@ export function ToneGenerator() {
     }
   };
 
-  const handleOctaveChange = (event: React.MouseEvent<HTMLElement>, newOctave: number | null) => {
+  const handleOctaveChange = (_event: React.MouseEvent<HTMLElement>, newOctave: number | null) => {
     if (newOctave !== null) {
       setToneOctave(newOctave);
       if (isPlaying && toneGeneratorRef.current) {
