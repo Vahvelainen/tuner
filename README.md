@@ -78,4 +78,8 @@ A simple musical instrument tuner + tone generator built with React, Material-UI
 - **Web Audio API** for audio processing
 - **Pitchy** library for pitch detection
 
+## Attribution
+
+The app icon (favicon) is based on ["8thNote.svg"](https://commons.wikimedia.org/wiki/File:8thNote.svg) by [PianistHere](https://commons.wikimedia.org/wiki/User:PianistHere), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). No changes were made to the original file.
+
  
