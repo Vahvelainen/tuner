@@ -19,7 +19,12 @@ export function TunerControls({ onStart, onStop }: Props) {
       sx={{ 
         py: 2, 
         fontSize: '1.2rem',
-        minWidth: 200
+        minWidth: 200,
+        backgroundColor: 'primary.main',
+        color: 'background.default',
+        '&:hover': {
+          backgroundColor: 'primary.dark',
+        }
       }}
     >
       {isListening ? 'Stop Tuning' : 'Start Tuning'}

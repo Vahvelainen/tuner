@@ -68,14 +68,11 @@ export function TunerDisplay() {
       <Box sx={{ 
         position: 'relative', 
         width: { xs: 'min(90vw, 450px)', sm: 450 }, // Responsive but capped width
-        height: 130, // Changed from 100 to 130px
+        height: 150,
         mx: 'auto',
         mb: 3,
         overflow: 'hidden', // This creates the small window
         borderRadius: '12px', // Slightly larger radius
-        backgroundColor: 'background.paper',
-        border: '3px solid', // Slightly thicker border
-        borderColor: 'divider'
       }}>
         {/* Large circular dial that rotates */}
         <Box sx={{
@@ -83,7 +80,7 @@ export function TunerDisplay() {
           width: 700, // Fixed size to match note calculations
           height: 700,
           left: '50%',
-          top: 0, // Top of dial at top of window
+          top: 12.5,
           transform: `translateX(-50%) rotate(${getDialRotation()}deg)`,
           transition: 'transform 0.4s ease-out',
           transformOrigin: '350px 350px' // Fixed center point to match calculations

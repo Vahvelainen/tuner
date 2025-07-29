@@ -150,11 +150,16 @@ export function TunerApp() {
                 fontSize: '1.1rem',
                 fontWeight: 500,
                 minWidth: 120,
-                px: 3
+                px: 3,
+                color: 'text.secondary', // Subdued gray for inactive
+                '&.Mui-selected': {
+                  color: tabValue === 0 ? 'primary.main' : 'secondary.main', // Purple for tuner, cyan for tone generator
+                }
               },
               '& .MuiTabs-indicator': {
                 height: 3,
-                borderRadius: '2px 2px 0 0'
+                borderRadius: '2px 2px 0 0',
+                backgroundColor: tabValue === 0 ? 'primary.main' : 'secondary.main', // Purple for tuner, cyan for tone generator
               }
             }}
           >

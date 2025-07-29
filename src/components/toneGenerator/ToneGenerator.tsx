@@ -4,7 +4,8 @@ import {
   IconButton, 
   ToggleButton, 
   ToggleButtonGroup, 
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 import { ToneGenerator as ToneGeneratorClass, frequencyFromNote } from '../../utils/audioProcessor';
@@ -24,6 +25,7 @@ interface NoteDialProps {
 }
 
 function NoteDial({ selectedNote, selectedOctave, onNoteChange }: NoteDialProps) {
+  const theme = useTheme();
   const radius = 160;
   const innerRadius = 110;
   const centerX = 200;
@@ -57,41 +59,27 @@ function NoteDial({ selectedNote, selectedOctave, onNoteChange }: NoteDialProps)
       <svg width="400" height="400" style={{ cursor: 'pointer' }}>
         {NOTES.map((note, index) => {
           const isSelected = note === selectedNote;
-          const isSharp = note.includes('#');
           
           return (
             <g key={note}>
               <path
                 d={createSlicePath(index)}
-                fill={isSelected ? '#4caf50' : isSharp ? '#555' : '#777'}
-                stroke="#222"
+                fill={isSelected ? theme.palette.secondary.main : theme.palette.grey[800]}
+                stroke={theme.palette.background.default}
                 strokeWidth="3"
                 style={{
                   transition: 'all 0.2s ease',
-                  filter: isSelected ? 'brightness(1.2)' : 'none',
+                  cursor: 'pointer'
                 }}
                 onClick={() => onNoteChange(note)}
-                onMouseEnter={(e) => {
-                  if (!isSelected) {
-                    e.currentTarget.style.fill = isSharp ? '#666' : '#888';
-                    e.currentTarget.style.filter = 'brightness(1.1)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isSelected) {
-                    e.currentTarget.style.fill = isSharp ? '#555' : '#777';
-                    e.currentTarget.style.filter = 'none';
-                  }
-                }}
               />
               
-              {/* Note label on each slice */}
               <text
                 x={centerX + (innerRadius + (radius - innerRadius) / 2) * Math.cos((index * 30 - 90 + 15) * (Math.PI / 180))}
                 y={centerY + (innerRadius + (radius - innerRadius) / 2) * Math.sin((index * 30 - 90 + 15) * (Math.PI / 180))}
                 textAnchor="middle"
                 dominantBaseline="central"
-                fill={isSelected ? '#fff' : '#ddd'}
+                fill={isSelected ? theme.palette.text.primary : theme.palette.text.secondary}
                 fontSize="16"
                 fontWeight={isSelected ? 'bold' : 'normal'}
                 style={{ 
@@ -110,9 +98,9 @@ function NoteDial({ selectedNote, selectedOctave, onNoteChange }: NoteDialProps)
           cx={centerX}
           cy={centerY}
           r={innerRadius - 4}
-          fill="#2a2a2a"
-          stroke="#444"
-          strokeWidth="3"
+          fill={theme.palette.background.default}
+          stroke={theme.palette.divider}
+          strokeWidth="2"
         />
       </svg>
       
@@ -135,7 +123,7 @@ function NoteDial({ selectedNote, selectedOctave, onNoteChange }: NoteDialProps)
           sx={{
             fontSize: '3.5rem',
             fontWeight: 'bold',
-            color: '#4caf50',
+            color: 'secondary.main',
             lineHeight: 1,
             mb: 1,
           }}
@@ -147,7 +135,7 @@ function NoteDial({ selectedNote, selectedOctave, onNoteChange }: NoteDialProps)
           sx={{
             fontSize: '1.5rem',
             fontWeight: 'bold',
-            color: '#aaa',
+            color: 'text.secondary',
           }}
         >
           {frequencyFromNote(selectedNote, selectedOctave).toFixed(1)} Hz
@@ -248,6 +236,19 @@ export function ToneGenerator() {
               fontWeight: 'bold',
               minWidth: 50,
               minHeight: 50,
+              color: 'text.secondary',
+              border: '1px solid',
+              borderColor: 'divider',
+              '&.Mui-selected': {
+                backgroundColor: 'grey.800',
+                color: 'text.primary',
+                '&:hover': {
+                  backgroundColor: 'grey.700',
+                }
+              },
+              '&:hover': {
+                backgroundColor: 'action.hover',
+              }
             }
           }}
         >
@@ -266,10 +267,11 @@ export function ToneGenerator() {
         sx={{
           width: 100,
           height: 100,
-          bgcolor: isPlaying ? 'error.main' : 'primary.main',
-          color: 'white',
+          bgcolor: isPlaying ? 'error.main' : 'secondary.main',
+          color: isPlaying ? 'white' : 'background.default',
+          mt: 3, // Added more margin from octave selection
           '&:hover': {
-            bgcolor: isPlaying ? 'error.dark' : 'primary.dark',
+            bgcolor: isPlaying ? 'error.dark' : 'secondary.dark',
           },
         }}
       >
