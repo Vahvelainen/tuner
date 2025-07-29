@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
-import { useTunerState } from '../../store/tunerStore';
+import { useTunerState } from './tunerStore';
 
 interface Props {
   onStart: () => void;

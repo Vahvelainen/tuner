@@ -1,5 +1,5 @@
 import { Box, Typography, LinearProgress } from '@mui/material';
-import { useTunerState } from '../../store/tunerStore';
+import { useTunerState } from './tunerStore';
 import { useState, useEffect } from 'react';
 
 export function TunerDisplay() {

@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import { ThemeProvider, createTheme, CssBaseline, Container, Box } from '@mui/material';
-import { TunerApp } from './components/tunerApp/TunerApp';
+import { TabNavigation } from './components/navigation/TabNavigation';
+import { MainContent } from './components/navigation/MainContent';
+import { useTunerState, stopListening } from './components/tuner/tunerStore';
+import { stopToneGeneration } from './components/toneGenerator/toneGeneratorStore';
 
 const theme = createTheme({
   palette: {
@@ -37,6 +41,18 @@ const theme = createTheme({
 });
 
 export function App() {
+  const [tabValue, setTabValue] = useState(0);
+  const { isListening } = useTunerState();
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+    // Stop both tuning and tone generation when switching tabs
+    if (isListening) {
+      stopListening();
+    }
+    stopToneGeneration();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -47,7 +63,8 @@ export function App() {
           flexDirection: 'column',
           py: 2 
         }}>
-          <TunerApp />
+          <TabNavigation tabValue={tabValue} onTabChange={handleTabChange} />
+          <MainContent tabValue={tabValue} />
         </Box>
       </Container>
     </ThemeProvider>
