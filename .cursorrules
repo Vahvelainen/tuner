@@ -1,0 +1,24 @@
+Use yarn as the package manager.
+
+
+Rules for writing code
+- avoid default exports
+- write neat clean code, split things into small files and functions
+- avoid inline comments
+- no index files
+- Do not use fallbacks to solve issues
+
+- Use the material-ui library
+- use zustand for state management if needed
+- createStore hook should not be exposed, instead write functions in store file that are
+- Define components as functions
+- Use function keyword for named functions and react components
+- Name react component props interfaces as just Props unless exported or ambiquity
+- Keep components small and simple
+- Keep potential component specific styles in the end of the file
+- Helper functions can be in the end of the file
+- Keep folder structure domain driven, make subfolders when necessary
+- Keep imports explicit, do not use index files or export default
+- Always name both component and subfolder with the component name ie. componentName/componentName.tsx
+- Do not make unneccessary subfolders when the component includes only a single file
+- no need to import React
